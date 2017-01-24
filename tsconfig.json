@@ -1,0 +1,30 @@
+{
+    "version": "0.1",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "system",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": false,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "noLib": false,
+		"lib": ["dom", "es5", "es2015", "es2015.promise"],
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true,
+		"outDir": "./dist/"//,
+        // "outFile": "./dist/bundle.js"
+    },
+	"include": [
+		"./src/**/*"
+    ],
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./typings/es6-promise/es6-promise.d.ts"
+    ]
+}

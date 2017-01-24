@@ -1,0 +1,21 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<base url="/canvas.layout.ts">
+	<script src="./dist/system.js"></script>
+	<script>
+	SystemJS.config({
+    	baseURL: "./dist",
+		packages: {
+			".": {
+				defaultJSExtensions:"js"
+			}
+		}
+	});
+	SystemJS.import("app.js");
+	</script>
+</head>
+<body>
+</body>
+</html>
