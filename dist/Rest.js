@@ -1,4 +1,4 @@
-System.register(["./Service", "./Template", "./Http/Get", "./Http/Post", "./Http/Put", "./Http/Patch", "./Http/Delete", "./Http/Headers"], function (exports_1, context_1) {
+System.register(["./Service", "./Template", "./RetryOnFailure", "./Http/Get", "./Http/Post", "./Http/Put", "./Http/Patch", "./Http/Delete", "./Http/Headers", "./Http/Base"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var Rest;
@@ -21,6 +21,9 @@ System.register(["./Service", "./Template", "./Http/Get", "./Http/Post", "./Http
             function (Template_1_1) {
                 exportStar_1(Template_1_1);
             },
+            function (RetryOnFailure_1_1) {
+                exportStar_1(RetryOnFailure_1_1);
+            },
             function (Get_1_1) {
                 exportStar_1(Get_1_1);
             },
@@ -38,6 +41,9 @@ System.register(["./Service", "./Template", "./Http/Get", "./Http/Post", "./Http
             },
             function (Headers_1_1) {
                 exportStar_1(Headers_1_1);
+            },
+            function (Base_1_1) {
+                exportStar_1(Base_1_1);
             }
         ],
         execute: function () {

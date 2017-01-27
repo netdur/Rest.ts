@@ -95,7 +95,7 @@ System.register(["./Rest"], function (exports_1, context_1) {
             ], JSONPlaceholder.prototype, "post", null);
             __decorate([
                 Rest_1.GET((_d = ["/posts?userId=", ""], _d.raw = ["/posts?userId=", ""], Rest_1.Template(_d, 0))),
-                Rest_1.Headers(["xyz: abc"]),
+                Rest_1.RetryOnFailure(4, 1000),
                 __metadata("design:type", Function),
                 __metadata("design:paramtypes", [Number]),
                 __metadata("design:returntype", Object)

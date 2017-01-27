@@ -1,4 +1,4 @@
-import { Template as u, Service, GET, DELETE, POST, PUT, PATCH, Headers, Rest } from "./Rest";
+import { Template as u, Service, RetryOnFailure, GET, DELETE, POST, PUT, PATCH, Headers, Rest } from "./Rest";
 
 module Models {
 	export class Post {
@@ -25,7 +25,7 @@ class JSONPlaceholder implements Service {
 	post(id: number): any {}
 
 	@GET(u`/posts?userId=${0}`)
-	@Headers(["xyz: abc"])
+	@RetryOnFailure(4, 1000)
 	postsByUser(userId: number): any {}
 
 	@POST(u`/posts`)
@@ -47,16 +47,6 @@ class Main {
 	service = new JSONPlaceholder()
 
 	constructor() {
-		/*
-		this.service.postsByUser(1)
-		.then((response: Response) => response.clone().json().catch(() => response.text()) )
-		.then((posts: Array<Models.Post>) => {
-			posts.forEach(post => {
-				console.log(post.title)
-			})
-		});
-		*/
-
 		this.loadPostByUserAsync(1).then((tock: number) => {
 			console.log(tock);
 		});
@@ -88,8 +78,8 @@ class Main {
 
 	async loadPostByUserAsync(userId: number): Promise<number> {
 		const tick = performance.now();
-		const response: Response = await this.service.postsByUser(userId);
-		const posts: any = await response.json();
+		const response/*: Response*/ = await this.service.postsByUser(userId);
+		const posts/*: Promise<JSON>*/ = await response.json();
 		posts.forEach((post: Models.Post) => {
 			console.log(`${post.id} => ${post.title}`);
 		});
