@@ -32,7 +32,7 @@ const retryAndReturnPromise = async function({
 	if (descriptor != undefined && descriptor.hasOwnProperty("retryOnFailure")) {
 		let promise;
 		let responseOK = false;
-		let tryCount = 0
+		let tryCount = 0;
 		while (!responseOK && tryCount < descriptor.retryOnFailure.attempts) {
 			try {
 				let options = {
