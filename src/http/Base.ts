@@ -3,9 +3,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const buildHeaders = (descriptor: PropertyDescriptor) : Headers => {
 	const headers = new Headers();
 	if (descriptor != undefined && descriptor.hasOwnProperty("headers")) {
-		descriptor.headers.forEach((header: string) => {
-			headers.append(...header.split(":"));
-		})
+		descriptor.headers.forEach((header: string) => headers.append(...header.split(":")) )
 	}
 	return headers;
 }
@@ -25,9 +23,7 @@ const retryAndReturnPromise = async function({
 }): Promise<any> {
 
 	const data = new FormData();
-	if (model) {
-		Object.getOwnPropertyNames(model).forEach(field => data.append(field, model[field]));
-	}
+	if (model) Object.getOwnPropertyNames(model).forEach(field => data.append(field, model[field]));
 
 	if (descriptor != undefined && descriptor.hasOwnProperty("retryOnFailure")) {
 		let promise;
@@ -82,6 +78,5 @@ export const BaseGD = function(type: string, builder: Function, target: any, key
 		const headers = buildHeaders(descriptor);
 		return await retryAndReturnPromise({ url, type, headers, descriptor });
 	}
-
 	return descriptor;
 }

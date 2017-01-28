@@ -6,7 +6,7 @@ https://developers.facebook.com/docs/graph-api/using-graph-api
 
 First create Facebook class implementing Service interface then create abstract[!] methods you wish to use
 
-    class Facebook impolments Service {
+    class Facebook implements Service {
         baseUrl = "https://graph.facebook.com"
         
         @GET(u`/me/photos`)
