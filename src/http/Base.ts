@@ -39,7 +39,7 @@ const retryAndReturnPromise = async function({
 				promise = await fetch(url, options);
 				responseOK = promise.ok
 			} catch (e) {
-				console.log("intercept", "Request is not successful - " + tryCount)
+				console.error("intercept", "Request is not successful - " + tryCount)
 			} finally {
 				await delay(descriptor.retryOnFailure.delay);
 				tryCount++;
