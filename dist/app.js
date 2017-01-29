@@ -65,10 +65,14 @@ System.register(["./Rest"], function (exports_1, context_1) {
                 function JSONPlaceholder() {
                     this.baseUrl = "https://jsonplaceholder.typicode.com";
                 }
-                JSONPlaceholder.prototype.comments = function () { };
+                JSONPlaceholder.prototype.comments = function (postId) { };
                 JSONPlaceholder.prototype.posts = function () { };
                 JSONPlaceholder.prototype.post = function (id) { };
-                JSONPlaceholder.prototype.postsByUser = function (userId) { };
+                JSONPlaceholder.prototype.postsByUser = function (userId) {
+                    if (arguments[0] instanceof Response) {
+                        console.log("middle wear", arguments[0]);
+                    }
+                };
                 JSONPlaceholder.prototype.create = function (post) { };
                 JSONPlaceholder.prototype.update = function (post, postId) { };
                 JSONPlaceholder.prototype.save = function (post, postId) { };
@@ -78,7 +82,7 @@ System.register(["./Rest"], function (exports_1, context_1) {
             __decorate([
                 Rest_1.GET((_a = ["/posts/", "/comments"], _a.raw = ["/posts/", "/comments"], Rest_1.Template(_a, 0))),
                 __metadata("design:type", Function),
-                __metadata("design:paramtypes", []),
+                __metadata("design:paramtypes", [Number]),
                 __metadata("design:returntype", Object)
             ], JSONPlaceholder.prototype, "comments", null);
             __decorate([

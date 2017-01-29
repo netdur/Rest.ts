@@ -36,7 +36,7 @@ System.register([], function (exports_1, context_1) {
         }
     };
     var __moduleName = context_1 && context_1.id;
-    var delay, buildHeaders, retryAndReturnPromise, BasePPP, BaseGD;
+    var delay, buildHeaders, handleMiddleWear, retryAndReturnPromise, BasePPP, BaseGD;
     return {
         setters: [],
         execute: function () {
@@ -44,11 +44,16 @@ System.register([], function (exports_1, context_1) {
             buildHeaders = function (descriptor) {
                 var headers = new Headers();
                 if (descriptor != undefined && descriptor.hasOwnProperty("headers")) {
-                    descriptor.headers.forEach(function (header) {
-                        headers.append.apply(headers, header.split(":"));
-                    });
+                    descriptor.headers.forEach(function (header) { return headers.append.apply(headers, header.split(":")); });
                 }
                 return headers;
+            };
+            handleMiddleWear = function (response, descriptor) {
+                var mw = descriptor.original(response);
+                if (mw instanceof Response) {
+                    response = mw;
+                }
+                return response;
             };
             retryAndReturnPromise = function (_a) {
                 var url = _a.url, type = _a.type, headers = _a.headers, descriptor = _a.descriptor, model = _a.model;
@@ -58,9 +63,8 @@ System.register([], function (exports_1, context_1) {
                         switch (_a.label) {
                             case 0:
                                 data = new FormData();
-                                if (model) {
+                                if (model)
                                     Object.getOwnPropertyNames(model).forEach(function (field) { return data.append(field, model[field]); });
-                                }
                                 if (!(descriptor != undefined && descriptor.hasOwnProperty("retryOnFailure")))
                                     return [3 /*break*/, 9];
                                 promise = void 0;
@@ -86,7 +90,7 @@ System.register([], function (exports_1, context_1) {
                                 return [3 /*break*/, 7];
                             case 4:
                                 e_1 = _a.sent();
-                                console.log("intercept", "Request is not successful - " + tryCount);
+                                console.error("intercept", "Request is not successful - " + tryCount);
                                 return [3 /*break*/, 7];
                             case 5: return [4 /*yield*/, delay(descriptor.retryOnFailure.delay)];
                             case 6:
@@ -94,7 +98,7 @@ System.register([], function (exports_1, context_1) {
                                 tryCount++;
                                 return [7 /*endfinally*/];
                             case 7: return [3 /*break*/, 1];
-                            case 8: return [2 /*return*/, promise];
+                            case 8: return [2 /*return*/, handleMiddleWear(promise, descriptor)];
                             case 9:
                                 options = {
                                     method: type,
@@ -102,13 +106,13 @@ System.register([], function (exports_1, context_1) {
                                 };
                                 if (model)
                                     options.data = data;
-                                return [2 /*return*/, fetch(url, options)];
+                                return [2 /*return*/, handleMiddleWear(fetch(url, options), descriptor)];
                         }
                     });
                 });
             };
             exports_1("BasePPP", BasePPP = function (type, builder, target, key, descriptor) {
-                var original = descriptor.value();
+                var original = descriptor.value;
                 descriptor.value = function (model) {
                     var args = [];
                     for (var _i = 1; _i < arguments.length; _i++) {
@@ -128,10 +132,11 @@ System.register([], function (exports_1, context_1) {
                         });
                     });
                 };
+                descriptor.original = original;
                 return descriptor;
             });
             exports_1("BaseGD", BaseGD = function (type, builder, target, key, descriptor) {
-                var original = descriptor.value();
+                var original = descriptor.value;
                 descriptor.value = function () {
                     var args = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
@@ -151,6 +156,7 @@ System.register([], function (exports_1, context_1) {
                         });
                     });
                 };
+                descriptor.original = original;
                 return descriptor;
             });
         }

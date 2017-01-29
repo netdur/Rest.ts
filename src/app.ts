@@ -15,7 +15,7 @@ class JSONPlaceholder implements Service {
 
 	// comments
 	@GET(u`/posts/${0}/comments`)
-	comments(): any {}
+	comments(postId: number): any {}
 
 	// posts
 	@GET(u`/posts`)
@@ -26,7 +26,12 @@ class JSONPlaceholder implements Service {
 
 	@GET(u`/posts?userId=${0}`)
 	@RetryOnFailure(4, 1000)
-	postsByUser(userId: number): any {}
+	postsByUser(userId: number): Response {
+		if (arguments[0] instanceof Response) {
+			// check and manipulate Response if needed then return it
+			return arguments[0];
+		}
+	}
 
 	@POST(u`/posts`)
 	create(post: Models.Post): any {}
