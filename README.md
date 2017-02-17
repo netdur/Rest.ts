@@ -26,4 +26,4 @@ and that's all, here how to use Facebook class
 
 ## License
 
-Released under a non-commercial BSD license
+GPL v2
